@@ -10,7 +10,7 @@ class board:
 
     def check():
         for ant in self.ants:
-            if ant.location == self.treasure:
+            if ant.getLocation() == self.treasure:
                 return True
         return False
 
