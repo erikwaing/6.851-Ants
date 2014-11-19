@@ -155,7 +155,7 @@ class FKLS1(FKLS):
 
     def chooseNode(self):
         assert self.step == 'choosing node'
-        self.u = self.chooseUniformly( math.pow(2, 2*self.i) )
+        self.u = self.chooseUniformly( math.pow(2, self.i) )
         self.step = 'going to node'
 
     def returnToSource(self):

@@ -17,6 +17,8 @@ class Tests:
         returns a list of lists with the times that it took to find treasure
         '''
         results = []
+        totalNumExperiments = len(numAgents) * trialsPerAgent
+        current = 0
         for i in range(len(numAgents)):
             k = numAgents[i]
             distance = D[i]
@@ -25,9 +27,10 @@ class Tests:
                 ants = self.generateAnts(k, type)
                 treasureLoc = self.selectTreasureLocation(distance)
                 board = Board(treasureLoc, ants)
-                self.drawProgressBar((i*len(numAgents)+j)/float(len(numAgents)*trialsPerAgent))
+                self.drawProgressBar(current / float(totalNumExperiments))
                 experiment.append(board.runAnts())
                 results.append(experiment)
+                current += 1
         return results
 
     def generateAnts(self, n, type):
