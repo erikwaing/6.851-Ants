@@ -7,7 +7,10 @@ import math
 def showStatus(ant):
     print "Ant"
     print "Location: ", ant.location
-    print "Step: ", ant.step
+    print "(j, i)", (ant.j, ant.i)
+    print "u = ", ant.u
+    print "Spiral step: ", ant.step
+    print "Spiral limit: ", ant.t_max()
     if ant.step == 'spiral':
         print "Spiral Step: ", ant.t
         print "Out of: ", math.pow(2, 2*ant.i + 2)/float(ant.k)
@@ -39,8 +42,8 @@ def showImage(ants, xrange, yrange):
     option = raw_input()
     while option != 'q':
         for ant in ants:
-            showStatus(ant)
             ant.act()
+            showStatus(ant)
             if ant.step != 'spiral':
                 placesVisitedDuringSpiral = []
             else:
