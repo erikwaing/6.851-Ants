@@ -69,7 +69,47 @@ class LinesNonUniform:
 		self.step = 'start'
 
 
+class LinesUniformInD(LinesNonUniform):
+
+	def __init__(self, location, n, K):
+		self.source = location
+		self.n = n
+		self.K = K
+		self.i = 0
+		self.step = 'start'
+		self.simulation = None
 
 
+	def getLocation(self):
+		if self.simulation is None:
+			return self.source
+		return self.simulation.getLocation()
+
+	def act(self):
+		if self.step == 'start':
+			self.start()
+		elif self.step == 'try':
+			self.trySearch()
+		elif self.step == 'simulate':
+			self.simulate()
+
+	def start(self):
+		self.simulation = LinesNonUniform(self.source, math.pow(2 , 2*self.i))
+		self.step = 'try'
+
+	def trySearch(self):
+		p = self.K + max( self.i - math.floor( math.log(self.n , 2) ) , 0 )
+		if random.random() > (1.0 / p):
+			self.step = 'simulate'
+		else:
+			self.i += 1
+			self.step = 'start'
+
+	def simulate(self):
+		if self.simulation.step == 'origin':
+			self.simulation.act()
+			self.step = 'try'
+		else:
+			self.simulation.act()
 
 
