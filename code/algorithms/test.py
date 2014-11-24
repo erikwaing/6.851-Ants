@@ -1,3 +1,4 @@
+import math
 from FKLS import *
 import matplotlib as mpl
 import pylab as pl

@@ -1,3 +1,5 @@
+import math
+import random
 
 class FKLS:
     
@@ -204,4 +206,33 @@ class FKLS2(FKLS):
     def t_max(self):
         return math.floor( math.pow( 2, self.i+2 ) / self.f(self.j) + 0.5 )
 
+class HarmonicSearch(FKLS):
+    
+    def __init__(self, location, delta):
+        FKLS.__init__(self, location, 0,0)
+        self.delta = delta
+        self.normalVariance = 1 / math.sqrt(2) * math.pow((2 + delta), -0.5)
 
+    def chooseNode(self):
+        assert self.step == 'choosing node'
+        self.distance_u = self.sampleDistance()
+        xcoor = random.randint(-self.distance_u, self.distance_u)
+        ycoor = self.distance_u - abs(xcoor)
+        self.u = (xcoor, ycoor)
+        self.step = 'going to node'
+
+    def sampleDistance(self):
+        x = random.random()
+        y = math.floor(1./x)
+        distance_u = math.pow((math.pow(2*y - 1, 2) - 1)/4.0, 1./(2+self.delta))
+        distance_u = int(math.ceil(distance_u))
+        return distance_u
+
+    def returnToSource(self):
+        assert self.step == 'return'
+        self.location = self.source
+        self.step = 'choosing node'
+
+    def t_max(self):
+        return math.pow(self.distance_u, 2 + self.delta)
+    
