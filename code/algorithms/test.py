@@ -2,7 +2,6 @@ from FKLS import *
 import matplotlib as mpl
 import pylab as pl
 import Image,ImageDraw
-import math
 
 def showStatus(ant):
     print "Ant"
@@ -12,8 +11,7 @@ def showStatus(ant):
     print "Spiral step: ", ant.step
     print "Spiral limit: ", ant.t_max()
     if ant.step == 'spiral':
-        print "Spiral Step: ", ant.t
-        print "Out of: ", math.pow(2, 2*ant.i + 2)/float(ant.k)
+        print "Spiral current:", ant.t
 
 
 def drawBoard(ants, xrange, yrange, placesVisitedDuringSpiral):
@@ -56,5 +54,5 @@ def showImage(ants, xrange, yrange):
         pl.pause(0.2)
         option = raw_input()
 
-ant = FKLS1((0,0), 1)
+ant = FKLS2((0,0), lambda x: x*x + 1)
 

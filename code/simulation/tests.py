@@ -29,8 +29,8 @@ class Tests:
                 board = Board(treasureLoc, ants)
                 self.drawProgressBar(current / float(totalNumExperiments))
                 experiment.append(board.runAnts())
-                results.append(experiment)
                 current += 1
+            results.append(experiment)
         return results
 
     def generateAnts(self, n, type):

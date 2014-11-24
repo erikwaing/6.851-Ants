@@ -182,7 +182,7 @@ class FKLS2(FKLS):
     def chooseNode(self):
         assert self.step == 'choosing node'
         D_i_j = math.sqrt( math.pow( 2, self.i+self.j ) / self.f(self.j) )
-        self.u = self.chooseUniformly( math.round(D_i_j) )
+        self.u = self.chooseUniformly( math.floor(D_i_j+0.5) )
         self.step = 'going to node'
 
     def returnToSource(self):
@@ -190,20 +190,20 @@ class FKLS2(FKLS):
         self.location = self.source
         if self.i == self.j:
 
-            if self.j == self.l:
+            if self.i == self.l:
                 self.l += 1
                 self.j = 0
                 self.i = 0
             else:            
-                self.j += 1
-                self.i = 0
+                self.j = 0
+                self.i += 1
 
-        elif self.i < self.j:
-            self.i += 1
+        elif self.j < self.i:
+            self.j += 1
 
         self.step = 'choosing node'
 
     def t_max(self):
-        return math.round( math.pow( 2, self.i+2 ) / self.f(self.j) )
+        return math.floor( math.pow( 2, self.i+2 ) / self.f(self.j) + 0.5 )
 
 
