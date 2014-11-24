@@ -1,0 +1,5 @@
+Notes:
+
+Typo in page 8 - inequality should be reversed to say R >= 1/2 \hat{R}
+typo in page 9 - the first case of bounding q should be when n < 64D, and the second case
+		 should be when n >= 64D. (the signs are flipped in both cases currently)

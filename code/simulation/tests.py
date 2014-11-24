@@ -4,6 +4,7 @@ from algorithms.RandomWalk import *
 from simulation.board import *
 import sys
 import random
+import math
 
 class Tests:
 

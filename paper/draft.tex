@@ -1,0 +1,69 @@
+
+
+\documentclass[runningheads,a4paper]{llncs}
+
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amsthm}
+\usepackage{subfigure}
+%\usepackage{caption} 
+%\usepackage{subcaption}
+%\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{url}
+\urlstyle{same}
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\makeatletter
+\let\c@lemma=\c@theorem
+\let\c@corollary=\c@theorem
+\let\c@fact=\c@theorem
+\makeatother
+
+\let\realendproof=\endproof
+\def\endproof{\hspace*{\fill}$\Box$\realendproof}
+
+
+\begin{document}
+
+\mainmatter  
+
+\title{Experiments on ANTS Algorithms Without Communication}
+\author{Fermi Ma \and Nicolas Rakover \and Erik Waingarten}
+\institute{MIT}
+
+\maketitle
+
+\section{Introduction}
+
+\subsection{Related Works}
+
+\section{Algorithms}
+
+We run experiments on three algorithms:
+\begin{itemize}
+\item FKLS
+\item LLNR
+\item Harmonic search algorithm
+\end{itemize}
+
+Go through thorough theoretical analysis of each. Explain lower bound. Give the model and the motivations.
+
+\subsection{Extending LLNR to uniform}
+
+\section{Experiments and Results}
+
+\subsection{Non-uniform in $n$}
+
+\subsection{Uniform in $n$}
+
+\section{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

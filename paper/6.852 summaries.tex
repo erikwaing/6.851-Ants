@@ -1,0 +1,77 @@
+\documentclass[11pt]{article}
+\usepackage{graphicx}    % needed for including graphics e.g. EPS, PS
+\topmargin -1.5cm        % read Lamport p.163
+\oddsidemargin -0.04cm   % read Lamport p.163
+\evensidemargin -0.04cm  % same as oddsidemargin but for left-hand pages
+\textwidth 16.59cm
+\textheight 21.94cm 
+%\pagestyle{empty}       % Uncomment if don't want page numbers
+\parskip 7.2pt           % sets spacing between paragraphs
+%\renewcommand{\baselinestretch}{1.5} % Uncomment for 1.5 spacing between lines
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{blkarray}
+\parindent 0pt		 % sets leading space for paragraphs
+\author{Fermi Ma}
+\title{6.852 summaries}
+\newcommand{\x}{\overline{x}}
+\newcommand{\fc}{\frac{x_C}{N}}
+
+\begin{document}
+\maketitle
+
+\section{Collaborative Search on the Plane without Communication}
+
+\subsection{Overview}
+
+This paper introduces the \emph{Ants Nearby Treasure Search} problem for modelling collective foraging in animal groups. In the problem, $k$ identical probabilistic agents search for treasure located by an adversary $D$ units away from a central location. The time it takes to find treasure is lower bounded by $\Omega(D + D^2/k)$, and this paper shows that this bound can be matched if the agents have knowledge of $k$ up to a constant approximation.
+
+The paper also shows that the agents can potentially perform well without any knowledge of $k$, and it also gives an efficient, uniform algorithm that may be biologically relevant.
+
+\subsection{Formal Problem Statement}
+
+There are $k$ mobile agents searching for treasure in the two-dimensional grid $G$ with vertex set $\mathbb{Z}^2$. All $k$ agents start the search from a central \emph{source} node $s \in G$. An adversary places the treasure at some target node $\tau \in G$ at a \emph{hop distance} $D$ away from $s$. The hop distance is simply the minimum number of grid edges that must be traversed to get from one node to another, and is also known as the taxicab distance. We denote the hop distance from the starting node $s$ to some point $t$ as $d(t)$. The goal of the agents is for one of them to find the treasure by reaching the node $\tau$.
+
+The individual agents are permitted to use any amount of computation and storage necessary. It is assumed that the agents act synchronously, and that they all start their search at the same time $t_0$. Each edge traversal costs one unit of time, so the total time (or cost) it takes to run an algorithm is the number of edges traversed by the first agent to find the treasure. The cost of a given algorithm $\mathcal{A}$ is simply the expected time it takes to find the treasure, which is denoted by $T_\mathcal{A}(D,k)$.
+
+\subsection{An $\Omega(D+D^2/k)$ Lower Bound}
+
+There is a simple $\Omega(D+D^2/k)$ lower bound which follows from the following argument. The time it takes $T$ for an algorithm to run must satisfy $T \geq D$, or else it is not even possible to reach treasure $D$ units away. 
+
+Also, $T$ must satisfy $T \geq D^2/4k$. To see why, suppose not. Then $T < D^2/4k$, and in particular $2kT < D^2/2$. Thus, out of all the points that are at most $D$ away from the source $s$, by time $2T$, strictly less than half of them have been visited. This implies that some node at most $D$ units away is visited with probability less than $1/2$ by time $2T$. If the adversary simply places the target at that node, then the expected time to find the treasure is strictly greater than $T$, which is a contradiction.
+
+\subsection{An Asymptotically Optimal Upper Bound Given $k$}
+
+The paper shows that if the agents know the exact value of $k$, an optimal runtime of $O(D+D^2/k)$ can be achieved.
+
+[ALGORITHM DESCRIPTION AND PROOF]
+
+In fact, even if the agents do not know the exact value $k$, and instead only know soem value $k_a$ in the range $k/p \leq k_a \leq kp$, then the running time is only increased by at most $p^2$.
+
+[ADD PROOF]
+
+\subsection{A Uniform Algorithm}
+
+We consider the idea of \emph{uniform algorithms}, which are algorithms for the case where the agents do not know the value of $k$. 
+
+\subsection{A Lower Bound for Uniform Algorithms}
+
+\subsection{Harmonic Search}
+
+The harmonic search algorithm is a very simple algorithm that does not perform in iterations. This algorithm is proposed because it is more likely to be used by real ants, as the iterative methods used by the above algorithms may be too complicated.
+
+The algorithm works as follows. 1) The agent chooses a random direction and walks a distance $d$, where the probability of choosing $d$ is roughy inversely proportional to $d$. 2) The agent performs a spiral search for roughly $d^2$ steps. 3) The agent returns to the source.
+
+This algorithm performs well for large values of $k$.
+
+
+\section{Tradeoffs Between Selection Complexity and Performance when Searching the Plane without Communication}
+
+\subsection{Overview}
+
+\section{Solving the ANTS Problem with Asynchronous Finite State Machines}
+
+\subsection{Overview}
+
+\end{document}
