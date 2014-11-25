@@ -112,4 +112,12 @@ class LinesUniformInD(LinesNonUniform):
 		else:
 			self.simulation.act()
 
+class LinesUniformInAll(LinesUniformInD):
+        
+        def __init__(self, location, f, K):
+                LinesUniformInD.__init__(self, location, 0, K)
+                self.l = 0
+                self.f = f
 
+        def act(self):
+                return True
