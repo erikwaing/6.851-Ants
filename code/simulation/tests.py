@@ -41,6 +41,10 @@ class Tests:
             return self.generateNonUniformFKLSAnts(n)
         elif type['name'] == "LinesNonUniform":
             return self.generateNonUniformLinesAnts(n, type['args'])
+        elif type['name'] == "LinesUniformInD":
+            return self.generateUniformInDLinesAnts(n, type['args'])
+        elif type['name'] == "HarmonicSearch":
+            return self.generateHarmonicSearchAnts(n, type['args'])
         elif type['name'] == "Random":
             return self.generateRandomAnts(n)
 
@@ -55,8 +59,14 @@ class Tests:
         ants = [FKLS2((0,0), f) for i in range(n)]
         return ants
 
-    def generateNonUniformLinesAnts(n, D):
+    def generateNonUniformLinesAnts(self, n, D):
         return [LinesNonUniform((0,0), D) for i in range(n)]
+
+    def generateUniformInDLinesAnts(self, n, K):
+        return [LinesUniformInD((0,0), n, K) for i in range(n)]
+
+    def generateHarmonicSearchAnts(self, n, delta):
+        return [HarmonicSearch((0,0), delta) for i in range(n)]
 
     def generateRandomAnts(self, n):
         return [RandomWalk((0,0)) for i in range(n)]

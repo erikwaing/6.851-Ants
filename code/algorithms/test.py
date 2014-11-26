@@ -6,13 +6,14 @@ import Image,ImageDraw
 
 def showStatus(ant):
     print "Ant"
-    print "Location: ", ant.location
-    print "(j, i)", (ant.j, ant.i)
-    print "u = ", ant.u
-    print "Spiral step: ", ant.step
-    print "Spiral limit: ", ant.t_max()
-    if ant.step == 'spiral':
-        print "Spiral current:", ant.t
+    print "Location: ", ant.getLocation()
+    print "i: ", ant.i
+    #print "(j, i)", (ant.j, ant.i)
+    #print "u = ", ant.u
+    #print "Spiral step: ", ant.step
+    #print "Spiral limit: ", ant.t_max()
+    #if ant.step == 'spiral':
+    #    print "Spiral current:", ant.t
 
 
 def drawBoard(ants, xrange, yrange, placesVisitedDuringSpiral):
@@ -25,7 +26,7 @@ def drawBoard(ants, xrange, yrange, placesVisitedDuringSpiral):
             else:
                 r, g, b = 0, 0, 0
             for ant in ants:
-                (x0, y0) = ant.location
+                (x0, y0) = ant.getLocation()
                 if x0 + xrange/2 == i and y0 + yrange/2 == j:
                     r, g, b = 0, 255, 0
             if (i,j) in placesVisitedDuringSpiral:
