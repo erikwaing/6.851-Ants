@@ -223,9 +223,13 @@ class HarmonicSearch(FKLS):
 
     def sampleDistance(self):
         x = random.random()
-        y = math.floor(1./x)
+        print "X", x
+        y = math.ceil(1./x)
+        print "Y", y
         distance_u = math.pow((math.pow(2*y - 1, 2) - 1)/4.0, 1./(2+self.delta))
+        print "D (float)", distance_u
         distance_u = int(math.ceil(distance_u))
+        print "D (int)", distance_u
         return distance_u
 
     def returnToSource(self):
