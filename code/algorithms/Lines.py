@@ -29,8 +29,10 @@ class LinesNonUniform:
 	def start(self):
 		if random.random() < 0.5:
 			self.step = 'up'
+			self.moveUp()
 		else:
 			self.step = 'down'
+			self.moveDown()
 
 	def moveUp(self):
 		if random.random() > (1.0/self.D):
@@ -38,8 +40,10 @@ class LinesNonUniform:
 			self.location = (x0 , y0 + 1)
 		elif random.random() < 0.5:
 			self.step = 'left'
+			self.moveLeft()
 		else:
 			self.step = 'right'
+			self.moveRight()
 
 	def moveDown(self):
 		if random.random() > (1.0/self.D):
@@ -47,8 +51,10 @@ class LinesNonUniform:
 			self.location = (x0 , y0 - 1)
 		elif random.random() < 0.5:
 			self.step = 'left'
+			self.moveLeft()
 		else:
 			self.step = 'right'
+			self.moveRight()
 
 	def moveLeft(self):
 		if random.random() > (1.0/self.D):
@@ -88,19 +94,18 @@ class LinesUniformInD(LinesNonUniform):
 	def act(self):
 		if self.step == 'start':
 			self.start()
-		elif self.step == 'try':
-			self.trySearch()
 		elif self.step == 'simulate':
 			self.simulate()
 
 	def start(self):
 		self.simulation = LinesNonUniform(self.source, math.pow(2 , 2*self.i))
-		self.step = 'try'
+		self.trySearch()
 
 	def trySearch(self):
 		p = self.K + max( self.i - math.floor( math.log(self.n , 2) ) , 0 )
 		if random.random() > (1.0 / p):
 			self.step = 'simulate'
+			self.simulate()
 		else:
 			self.i += 1
 			self.step = 'start'
@@ -108,16 +113,17 @@ class LinesUniformInD(LinesNonUniform):
 	def simulate(self):
 		if self.simulation.step == 'origin':
 			self.simulation.act()
-			self.step = 'try'
+			self.trySearch()
 		else:
 			self.simulation.act()
 
-class LinesUniformInAll(LinesUniformInD):
-        
-        def __init__(self, location, f, K):
-                LinesUniformInD.__init__(self, location, 0, K)
-                self.l = 0
-                self.f = f
 
-        def act(self):
-                return True
+class LinesUniformInAll(LinesUniformInD):
+
+	def __init__(self, location, f, K):
+		LinesUniformInD.__init__(self, location, 0, K)
+		self.l = 0
+		self.f = f
+
+	def act(self):
+		return True
