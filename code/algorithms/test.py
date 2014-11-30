@@ -7,7 +7,7 @@ import Image,ImageDraw
 def showStatus(ant):
     print "Ant"
     print "Location: ", ant.getLocation()
-    print "i: ", ant.i
+    #print "i: ", ant.i
     #print "(j, i)", (ant.j, ant.i)
     #print "u = ", ant.u
     #print "Spiral step: ", ant.step

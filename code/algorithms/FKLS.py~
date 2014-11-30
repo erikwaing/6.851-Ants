@@ -224,7 +224,7 @@ class HarmonicSearch(FKLS):
     def sampleDistance(self):
         x = random.random()
         print "X", x
-        y = math.floor(1./x)
+        y = math.ceil(1./x)
         print "Y", y
         distance_u = math.pow((math.pow(2*y - 1, 2) - 1)/4.0, 1./(2+self.delta))
         print "D (float)", distance_u

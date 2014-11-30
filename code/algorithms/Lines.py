@@ -15,7 +15,7 @@ class LinesNonUniform:
 	def act(self):
 		if self.step == 'start':
 			self.start()
-		elif self.step == 'up':
+		if self.step == 'up':
 			self.moveUp()
 		elif self.step == 'down':
 			self.moveDown()
@@ -86,11 +86,12 @@ class LinesUniformInD(LinesNonUniform):
 		return self.simulation.getLocation()
 
 	def act(self):
-		if self.step == 'start':
-			self.start()
-		elif self.step == 'try':
-			self.trySearch()
-		elif self.step == 'simulate':
+		while self.step != 'simulate':
+			if self.step == 'start':
+				self.start()
+			if self.step == 'try':
+				self.trySearch()
+		if self.step == 'simulate':
 			self.simulate()
 
 	def start(self):

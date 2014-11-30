@@ -23,7 +23,7 @@ class FKLS:
         if self.step == None or self.step == 'choosing node':
             self.step = 'choosing node'
             self.chooseNode()
-        elif self.step == 'going to node':
+        if self.step == 'going to node':
             self.goToNode()
         elif self.step == 'spiral':
             self.spiral()
