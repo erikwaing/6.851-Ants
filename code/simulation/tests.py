@@ -65,6 +65,9 @@ class Tests:
     def generateUniformInDLinesAnts(self, n, K):
         return [LinesUniformInD((0,0), n, K) for i in range(n)]
 
+    def generateUniformInAllLinesAnts(self, n, K):
+        return [LinesUniformInAll((0,0), K) for i in range(n)]
+
     def generateHarmonicSearchAnts(self, n, delta):
         return [HarmonicSearch((0,0), delta) for i in range(n)]
 

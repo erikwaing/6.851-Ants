@@ -93,18 +93,9 @@ class LinesUniformInD(LinesNonUniform):
 		return self.simulation.getLocation()
 
 	def act(self):
-<<<<<<< HEAD
-		while self.step != 'simulate':
-			if self.step == 'start':
-				self.start()
-			if self.step == 'try':
-				self.trySearch()
-		if self.step == 'simulate':
-=======
 		if self.step == 'advance':
 			self.advance()
 		elif self.step == 'simulate':
->>>>>>> be651dc0d78abfd4bb337ed79942ab9be7b3ef3a
 			self.simulate()
 
 	def advance(self):
