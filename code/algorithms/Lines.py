@@ -19,20 +19,18 @@ class LinesNonUniform:
 			self.moveUp()
 		elif self.step == 'down':
 			self.moveDown()
-		elif self.step == 'left':
+		if self.step == 'left':
 			self.moveLeft()
 		elif self.step == 'right':
 			self.moveRight()
-		elif self.step == 'origin':
+		if self.step == 'origin':
 			self.backToOrigin()
 
 	def start(self):
 		if random.random() < 0.5:
 			self.step = 'up'
-			self.moveUp()
 		else:
 			self.step = 'down'
-			self.moveDown()
 
 	def moveUp(self):
 		if random.random() > (1.0/self.D):
@@ -40,10 +38,8 @@ class LinesNonUniform:
 			self.location = (x0 , y0 + 1)
 		elif random.random() < 0.5:
 			self.step = 'left'
-			self.moveLeft()
 		else:
 			self.step = 'right'
-			self.moveRight()
 
 	def moveDown(self):
 		if random.random() > (1.0/self.D):
@@ -51,10 +47,8 @@ class LinesNonUniform:
 			self.location = (x0 , y0 - 1)
 		elif random.random() < 0.5:
 			self.step = 'left'
-			self.moveLeft()
 		else:
 			self.step = 'right'
-			self.moveRight()
 
 	def moveLeft(self):
 		if random.random() > (1.0/self.D):
@@ -81,10 +75,10 @@ class LinesUniformInD(LinesNonUniform):
 		self.source = location
 		self.n = n
 		self.K = K
-		self.i = 0
+		self.i = 1
 		self.j = 1
 		self.step = 'simulate'
-		self.simulation = LinesNonUniform(self.source, 1)
+		self.simulation = LinesNonUniform(self.source, 2**self.i)
 
 
 	def getLocation(self):
@@ -95,7 +89,7 @@ class LinesUniformInD(LinesNonUniform):
 	def act(self):
 		if self.step == 'advance':
 			self.advance()
-		elif self.step == 'simulate':
+		if self.step == 'simulate':
 			self.simulate()
 
 	def advance(self):
@@ -107,9 +101,7 @@ class LinesUniformInD(LinesNonUniform):
 			LinesNonUniform(self.source, 2**self.i)
 		else:
 			self.j += 1
-
 		self.step = 'simulate'
-		self.simulate()
 
 	# def start(self):
 	# 	self.simulation = LinesNonUniform(self.source, math.pow(2 , self.i))
@@ -137,21 +129,19 @@ class LinesUniformInAll(LinesUniformInD):
 	def __init__(self, location, K):
 		self.source = location
 		self.K = K
-		self.i = 0
+		self.i = 1
 		self.n = 1
 		self.j = 1
 		self.step = 'simulate'
-		self.simulation = LinesNonUniform(self.source, 1)
+		self.simulation = LinesNonUniform(self.source, 2**self.i)
 
 	def getLocation(self):
-		if self.simulation is None:
-			return self.source
 		return self.simulation.getLocation()
 
 	def act(self):
 		if self.step == 'advance':
 			self.advace()
-		elif self.step == 'simulate':
+		if self.step == 'simulate':
 			self.simulate()
 
 	def advance(self):
@@ -168,9 +158,7 @@ class LinesUniformInAll(LinesUniformInD):
 				self.j = 1
 		else:
 			self.j += 1
-
 		self.step = 'simulate'
-		self.simulate()
 
 
 	def simulate(self):

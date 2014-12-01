@@ -45,6 +45,8 @@ class Tests:
             return self.generateUniformInDLinesAnts(n, type['args'])
         elif type['name'] == "HarmonicSearch":
             return self.generateHarmonicSearchAnts(n, type['args'])
+        elif type['name'] == "LinesUniformInAll":
+            return self.generateUniformInAllLinesAnts(n, type['args'])
         elif type['name'] == "Random":
             return self.generateRandomAnts(n)
 
