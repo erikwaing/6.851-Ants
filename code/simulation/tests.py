@@ -5,8 +5,33 @@ from simulation.board import *
 import sys
 import random
 import math
+import pickle
+import datetime
 
 class Tests:
+
+    def runAllTests(self, numAgents, D, trialsPerAgent):
+        types = [{'name':'FKLS1', 'args': None, 'argsName':'no args'},
+                 {'name':'FKLS2', 'args':lambda x: x**2+1, 'argsName': 'function f square'},
+                 {'name':'LinesNonUniform', 'args': 0, 'argsName': 'D'}, # need to overwrite D
+                 {'name':'LinesUniformInD', 'args': 1, 'argsName': 'K = 1'},
+                 {'name':'LinesUniformInAll', 'args': 1, 'argsName': 'K = 1'},
+                 {'name':'HarmonicSearch', 'args': 1, 'argsName': 'delta = 1'}
+                ]
+
+        for anttype in types:
+            print anttype
+            print "Starting Tests..."
+            results = self.testUniform(numAgents, D, trialsPerAgent, anttype)
+            print results
+            print "Pickling..."
+            exp = {'numAgents':numAgents, 'D': D, 'trialsPerAgent':trialsPerAgent}
+            testInfo = {'type': anttype['name'], 'argsDesc': anttype['argsName'], 'data':results,
+                        'experiment': exp }
+            name = 'data/' + anttype['name'] + str(datetime.date.today())
+            outputFile = open(name, 'wr')
+            pickle.dump(testInfo, outputFile)
+            outputFile.close()
 
     def testUniform(self, numAgents, D, trialsPerAgent, type):
         '''
@@ -25,6 +50,8 @@ class Tests:
             distance = D[i]
             experiment = []
             for j in range(trialsPerAgent):
+                if type['name'] == 'LinesNonUniform':            # Super hacky
+                    type['args'] = distance
                 ants = self.generateAnts(k, type)
                 treasureLoc = self.selectTreasureLocation(distance)
                 board = Board(treasureLoc, ants)
