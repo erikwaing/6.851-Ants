@@ -11,10 +11,10 @@ import datetime
 class Tests:
 
     def runAllTests(self, numAgents, D, trialsPerAgent):
-        types = [{'name':'FKLS1', 'args': None, 'argsName':'no args'},
-                 {'name':'FKLS2', 'args':lambda x: x**2+1, 'argsName': 'function f square'},
-                 {'name':'LinesNonUniform', 'args': 0, 'argsName': 'D'}, # need to overwrite D
-                 {'name':'LinesUniformInD', 'args': 1, 'argsName': 'K = 1'},
+        types = [#{'name':'FKLS1', 'args': None, 'argsName':'no args'},
+                 #{'name':'FKLS2', 'args':lambda x: x**2+1, 'argsName': 'function f square'},
+                 #{'name':'LinesNonUniform', 'args': 0, 'argsName': 'D'}, # need to overwrite D
+                #{'name':'LinesUniformInD', 'args': 1, 'argsName': 'K = 1'},
                  {'name':'LinesUniformInAll', 'args': 1, 'argsName': 'K = 1'},
                  {'name':'HarmonicSearch', 'args': 1, 'argsName': 'delta = 1'}
                 ]

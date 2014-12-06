@@ -14,6 +14,7 @@
 %\usepackage{cite}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{clrscode4e}
 \urlstyle{same}
 \newcommand{\keywords}[1]{\par\addvspace\baselineskip
 \noindent\keywordname\enspace\ignorespaces#1}
@@ -40,18 +41,79 @@
 
 \section{Introduction}
 
+We study the \emph{Ants Nearby Treasure Search} (ANTS) problem for modelling collective foraging in animal groups. $k$ identical probabilistic agents search for treasure located by an adversary $D$ units away from a central location.
+
 \subsection{Related Works}
+
+\section{The Problem Statement}
+
+There are $k$ mobile agents searching for treasure in the two-dimensional grid $G$ with vertex set $\mathbb{Z}^2$. All $k$ agents start the search from a central \emph{source} node $s \in G$. An adversary places the treasure at some target node $\tau \in G$ at a \emph{hop distance} $D$ away from $s$. The hop distance is the minimum number of grid edges that must be traversed to get from one node to another, and is also known as the taxicab distance. We denote the hop distance from the starting node $s$ to some point $t$ as $d(t)$. The goal of the agents is for one of them to find the treasure by reaching the node $\tau$.
+
+It is assumed that the agents act synchronously, and that they all start their search at the same time $t_0$. Each edge traversal costs one unit of time, so the total time (or cost) it takes to run an algorithm is the number of edges traversed by the first agent to find the treasure. The cost of a given algorithm $\mathcal{A}$ is the expected time it takes to find the treasure, which is denoted by $T_\mathcal{A}(D,k)$.
+
+\subsection{A Simple Lower Bound}
+
+There is a simple $\Omega(D+D^2/k)$ lower bound which follows from the following argument. The time it takes $T$ for an algorithm to run must satisfy $T \geq D$, or else it is not even possible to reach treasure $D$ units away. 
+
+Also, $T$ must satisfy $T \geq D^2/4k$. To see why, suppose not. Then $T < D^2/4k$, and in particular $2kT < D^2/2$. Thus, out of all the points that are at most $D$ away from the source $s$, by time $2T$, strictly less than half of them have been visited. This implies that some node at most $D$ units away is visited with probability less than $1/2$ by time $2T$. If the adversary simply places the target at that node, then the expected time to find the treasure is strictly greater than $T$, which is a contradiction.
+
+Note this lower bound holds even if the agents knows the total number of agents. 
 
 \section{Algorithms}
 
-We run experiments on three algorithms:
+We will focus on three kinds of algorithms:
 \begin{itemize}
-\item FKLS
-\item LLNR
+\item Spiral algorithms
+\item Lines algorithms
 \item Harmonic search algorithm
 \end{itemize}
 
-Go through thorough theoretical analysis of each. Explain lower bound. Give the model and the motivations.
+And each algorithm has two flavours: \emph{uniform} and \emph{non-uniform}. We say that an algorithm is non-uniform in parameter $p$ if $p$ is an input to the algorithm. If the parameter $p$ is not an input, then the algorithm is uniform in $p$. 
+
+For example, a spiral algorithm which is non-uniform in $k$ is the algorithm where agents can know how many total agents there are. An algorithm which is non-uniform in $D$ has an upper bound on the hop distance of the treasure. 
+
+The spiral and Harmonic search algorithms are similar strategies and were introduced by \cite{feinerman2012collaborative}. Both rely on the ``spiral" procedure, in which an agent covers a space of $\sqrt{d}$ grid cells in $O(d)$ time. Figure~\ref{fig:spiral} shows a possible spiral routine.
+There will be two kinds of spiral algorithms, non-uniform in $k$ and uniform in $k$. There will be three kinds of lines algorithms, non-uniform in $D$, non-uniform in $k$, and uniform in both $k$ and $D$. The Harmonic search algorithm is extremely simple and uniform in both $k$ and $D$. 
+
+\begin{figure}
+\centering
+\label{fig:spiral}
+\includegraphics[width=0.4\linewidth]{justspiral.pdf}
+\caption{Possible spiral, covering $\sqrt{d}$ grid cells in $O(d)$ time}
+\end{figure}
+
+\subsection{Spiral Algorithms}
+
+The following short explanations are from \cite{feinerman2012collaborative}.
+
+\subsubsection{Non-uniform in $k$}
+
+Given the number of agents taking part in the search, we could imagine an algorithm in which the grid in divided into $k$ parts, similar to a pizza being divided into $k$ equal parts. Each agent could cover his portion, and this would yield an asymptotically optimal algorithm. However, this assumes that the agents can communicate with each other and decide which portion belongs to which agent. 
+
+In order to get around this, we can introduce some randomization. If each agent picks a random grid cell within some distance $D$, travels to that distance and performs a spiral of sufficiently large size, it can expect that all agents together will search new areas. If we repeat this sufficiently many times, we can expect that the whole area within distance $D$ was covered. Then we just need to estimate the value of $D$.
+
+This is what the spiral algorithms does when its non-uniform in $k$. 
+
+\begin{codebox}
+\Procname{Each agent performs the following double loop}
+\li \For $j$ from $1$ to $\infty$, \Then
+\li \For $i$ from $1$ to $j$ \Then
+\li Go to a node chosen uniformly at random from nodes a distance $2^{i}$
+\li Perform a spiral search for $2^{2i+2}/k$ steps
+\li Return to source \End \End 
+\end{codebox}
+
+We provide a sketch of the proof to show the algorithm has expected running time $O(D + D^2/k)$. Note that the time until agents reach some value of $j$ is $O(2^j + 2^{2j}/k)$. Also, note that once $i \geq \log D$, the spiral will intersect the ball of radius $D$ significantly, and so the probability that an agent finds the treasure is some constant $\beta$. Therefore, the probability that no agents find it after $l$ phases of $i$ is $(1 - \beta/k)^{kl}$, which is also at most some constant probability $\gamma$.
+
+So for each additional $l$ values of $j$ once $j = \lceil \log D \rceil$, there are $l^2/2$ phases where $i \geq \log D$, and so the probability that a round takes $O(2^{j + l} + 2^{2(j+l)}/k)$ is $\gamma^{l^2/2}$, and so in the computation of the expected value, the sum of all $l$ converges to some constant. And we are left with a runtim of $O(2^{j} + 2^{2j}/k)$ for $j = \log D$. This finishes the sketch.
+
+\subsubsection{Uniform in $k$}
+
+Once we have the spiral algorithm non-uniform in $k$, we can make it uniform in $k$ by successively doubling estimates of $k$. This means that at each stage, we take a guess of what $k$ is, and we simulate the algorithm. There is some additional bookkeeping to ensure that enough iterations are made, but the optimization is similar. There is higher lower bound on how fast these algorithms can run, and we get a multiplicative factor of $f(\log k)$, where $f$ is a function such that $\sum \dfrac{1}{f(n)}$ converges. There is a corresponding lower bound that shows this algorithm is asymptotically optimal.
+
+\subsection{Lines Algorithm}
+
+The lines algorithm is the study of \cite{lenzen2014trade}, where they cover a lines algorithm which is non-uniform in $D$ and non-uniform in $k$. We use the ideas of \cite{feinerman2012collaborative} to design a lines algorithm which is uniform in both $k$ and $D$. 
 
 \subsection{Extending LLNR to uniform}
 
