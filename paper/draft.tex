@@ -113,7 +113,38 @@ Once we have the spiral algorithm non-uniform in $k$, we can make it uniform in 
 
 \subsection{Lines Algorithm}
 
-The lines algorithm is the study of \cite{lenzen2014trade}, where they cover a lines algorithm which is non-uniform in $D$ and non-uniform in $k$. We use the ideas of \cite{feinerman2012collaborative} to design a lines algorithm which is uniform in both $k$ and $D$. 
+The lines algorithm is the study of \cite{lenzen2014trade}, where they cover a lines algorithm which is non-uniform in $D$ and non-uniform in $k$. We use the ideas of \cite{feinerman2012collaborative} to design a lines algorithm which is uniform in both $k$ and $D$. The lines algorithm has many optimizations since \cite{lenzen2014trade} are trying to reduce \emph{selection complexity}. Selection complexity is a metric which measures how likely an algorithm is to occur naturally in nature. Of course, this notion is very vague, but formally, the selection complexity $\chi$ of an algorithm $A$ is $\chi(A) = b + \log l$ where $b$ is the amount of memory usage and $l$ is smallest $l$ for which the algorithm does not need finer probabilities than $2^{-l}$. In \cite{lenzen2014trade}, Lenzen et al. provided a lines algorithm with selection complexity $O(\log \log D)$.
+
+\subsubsection{Non-uniform in $D$} First, we will explain the simple lines algorithm which is non-uniform in $D$. Remember, $D$ is an upper bound on the distance the treasure. The lines algorithm is very simple to explain. With probability $\frac{1}{2}$, an agent moves up, otherwise, it moves down. Then it continues moving in that direction until a coin with head probability $\frac{D-1}{D}$ lands on tails. It repeats the process for the left and right directions. The pseudocode is shown, $C_p$ will denote a coin which lands heads with probability $p$, and so $C_p$ will return a 0 or 1, with 0 denoting heads.
+
+The algorithm relies on it novel way of walking in lines by approximately counting. The following procedure shows how an agent would move in a particular direction. 
+
+\begin{codebox}
+\Procname{moveDirection(dir)}
+\li \While $C_{\frac{D-1}{D}} = 0$ \Then
+\li agent moves in direction dir \End
+\end{codebox}
+
+Note that the above algorithm, while it uses contant memory, it does need to sample from a distribution with probability as fine as $\frac{1}{D}$. This is fine, since in this case, $l = \log D$. 
+Now that we know how agents move in a particular direction, they randomly pick a direction to travel.
+
+\begin{codebox}
+\Procname{Each agent performs the following iteration}
+\li dir[0] $\leftarrow$ up, dir[1] $\leftarrow$ down
+\li $i \leftarrow C_{\frac{1}{2}}$
+\li moveDirection($i$)
+\li \If $C_{\frac{1}{2}} = 0$ \Then
+\li moveDirection(left)
+\li \Else moveDirection(right) \End \End
+\li return to origin
+\end{codebox}
+
+The one thing to note is that the last line, ``return to origin" would need to keep the location of the ant. This would require $\log D$ memory, which we cannot afford; however, it is an assumption in the model that agents can return to the origin.
+
+% TO DO
+The sketch of the proof of correctness is the following ...????
+
+\subsubsection{Uniform in $D$}
 
 \subsection{Extending LLNR to uniform}
 
