@@ -56,11 +56,11 @@ It is assumed that the agents act synchronously, and that they all start their s
 
 \subsection{A Simple Lower Bound}
 
-There is a simple $\Omega(D+D^2/k)$ lower bound which follows from the following argument. The time it takes $T$ for an algorithm to run must satisfy $T \geq D$, or else it is not even possible to reach treasure $D$ units away. 
+There is a simple $\Omega(D+D^2/k)$ lower bound which follows from the following argument.
 
-Also, $T$ must satisfy $T \geq D^2/4k$. To see why, suppose not. Then $T < D^2/4k$, and in particular $2kT < D^2/2$. Thus, out of all the points that are at most $D$ away from the source $s$, by time $2T$, strictly less than half of them have been visited. This implies that some node at most $D$ units away is visited with probability less than $1/2$ by time $2T$. If the adversary simply places the target at that node, then the expected time to find the treasure is strictly greater than $T$, which is a contradiction.
+The time it takes $T$ for an algorithm to run must satisfy $T \geq D$, or else it is not even possible to reach treasure $D$ units away. Also, $T$ must satisfy $T \geq D^2/4k$. To see why, suppose not. Then $T < D^2/4k$, and in particular $2kT < D^2/2$. Thus, out of all the points that are at most $D$ away from the source $s$, by time $2T$, strictly less than half of them have been visited. This implies that some node at most $D$ units away is visited with probability less than $1/2$ by time $2T$. If the adversary simply places the target at that node, then the expected time to find the treasure is strictly greater than $T$, which is a contradiction.
 
-Note this lower bound holds even if the agents knows the total number of agents. 
+Note this lower bound holds even if the agents know the total number of agents. 
 
 \subsection{Types of Algorithms}
 We will focus on three kinds of algorithms:
@@ -70,12 +70,12 @@ We will focus on three kinds of algorithms:
 \item Harmonic search algorithm
 \end{itemize}
 
-And each algorithm has two flavours: \emph{uniform} and \emph{non-uniform}. We say that an algorithm is non-uniform in parameter $p$ if $p$ is an input to the algorithm. If the parameter $p$ is not an input, then the algorithm is uniform in $p$. 
+Each algorithm has two flavors: \emph{uniform} and \emph{non-uniform}. We say that an algorithm is non-uniform in parameter $p$ if $p$ is an input to the algorithm. If the parameter $p$ is not an input, then the algorithm is uniform in $p$. 
 
 For example, a spiral algorithm which is non-uniform in $k$ is the algorithm where agents can know how many total agents there are. An algorithm which is non-uniform in $D$ has an upper bound on the hop distance of the treasure. 
 
-The spiral and Harmonic search algorithms are similar strategies and were introduced by \cite{feinerman2012collaborative}. Both rely on the ``spiral" procedure, in which an agent covers a space of $\sqrt{d}$ grid cells in $O(d)$ time. Figure~\ref{fig:spiral} shows a possible spiral routine.
-There will be two kinds of spiral algorithms, non-uniform in $k$ and uniform in $k$. There will be three kinds of lines algorithms, non-uniform in $D$, non-uniform in $k$, and uniform in both $k$ and $D$. The Harmonic search algorithm is extremely simple and uniform in both $k$ and $D$. 
+The spiral and Harmonic search algorithms are similar strategies and were introduced by \cite{feinerman2012collaborative}. Both rely on the ``spiral" procedure, in which an agent covers a $\sqrt{d} \times \sqrt{d}$ region of grid cells in $O(d)$ time. Figure~\ref{fig:spiral} shows a possible spiral routine.
+There will be two kinds of spiral algorithms: non-uniform in $k$ and uniform in $k$. There will be three kinds of lines algorithms, non-uniform in $D$, non-uniform in $k$, and uniform in both $k$ and $D$. The Harmonic search algorithm is extremely simple and is uniform in both $k$ and $D$. 
 
 \begin{figure}
 \centering
