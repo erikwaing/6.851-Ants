@@ -193,35 +193,37 @@ The main idea for achieving uniformity in $k$ is borrowed from \cite{feinerman20
 
 In this section, we show our results for the experiments we ran on the algorithms mentioned above. We do not go into detail regarding the various implementations of the algorithms, but all of the code, along with the data used is available online hosted in the git repository: \url{https://github.com/erikwaing/6.852-Ants.git}. 
 
-We implemented the three algorithms, in the possible different uniformity flavours. Even though \cite{lenzen2014trade} does not go into detail on how to make the Lines algorithm uniform in $k$, we apply the same techniques as in \cite{feinerman2012collaborative}. This allows us to compare the algorithms on an equal setting, with both non-uniform in $k$ and uniform in $k$ flavours. 
+We implemented the three algorithms, in the possible different uniformity flavors. Even though \cite{lenzen2014trade} does not go into detail on how to make the Lines algorithm uniform in $k$, we apply the same techniques as in \cite{feinerman2012collaborative} to do so. This allows us to compare the algorithms on an equal footing, with both non-uniform in $k$ and uniform in $k$ variants. 
 
-In the Lines algorithm, there are optimizations made in order to keep memory low. For example, in the outer loop of the Lines algorithm which is uniform in $D$, but not in $n$, there is some approximate counting. We note that the algorithm still works with the same runtime if instead of the approximate couting, we looped for as long as the expected value of the number of loops. This keeps the expected runtime the same, and decreases the variance runtime, which will allow us to converge to constants experimentally quicker. These approximate countings were made in order to optimize memory, and we are only focused on the runtime of the algorithms.
+In the Lines algorithm, there are optimizations made in order to keep memory low. For example, in the outer loop of the Lines algorithm which is uniform in $D$, but not in $n$, there is some approximate counting. We note that the algorithm still works with the same runtime if instead of the approximate couting, we looped for as long as the expected value of the number of loops. This keeps the expected runtime the same, and decreases the variance of the runtime, which will allow us to converge to constants experimentally quicker. These approximate countings were made in order to optimize memory, as we are only focused on the runtime of the algorithms.
 
 \subsubsection{Experimental Setup}
 
-We had to run the Spiral algorithm and the Lines algorithm differently from the Harmonic Search algorithm. This is because the Harmonic Search requires arbritrary fine probabilites. The technique we used for implementing the Harmonic Search relies on sampling uniformly from the interval $(0, 1)$, and then applying some transformations. Since we implemented the algorithm in python, and used \texttt{random.random()} in order to sample uniformly from $(0,1)$, we are limited by the granurality of the python module. This means that our current implementation of the Harmonic Search has an upper bound on how far $D$ can be. We believe finding better ways to implement this algorithm is an interesting research direction, both in the theoretical algorithms world, as well as the experimental algorithms world. 
+We had to run the Spiral algorithm and the Lines algorithm differently from the Harmonic Search algorithm. This is because the Harmonic Search requires arbritrary fine probabilites. The technique we used for implementing the Harmonic Search relies on sampling uniformly from the interval $(0, 1)$, and then applying some transformations. Since we implemented the algorithm in python, and used \texttt{random.random()} in order to sample uniformly from $(0,1)$, we are limited by the granurality of the python module. This means that our current implementation of the Harmonic Search has an upper bound on how large $D$ can be. We believe that finding better ways to implement this algorithm is an interesting research direction.
 
 For testing the Lines and Spiral algorithms, we ran the following series of experiments. 
 \begin{enumerate}
-\item We set $D = 40$, and left it at 40 for the whole experiments. 
-\item We vary $k$ from $10$ to $200$ inclusive in intervals of 10. 
+\item We set $D = 40$, and left it at 40 for the whole experiment. 
+\item We vary $k$ from $10$ to $200$ inclusive in step sizes of 10. 
 \item We run each algorithm with each value of $k$ for 100 iterations.
 \item We run the experiments on a random placement of the treasure within hop distance $D$ from the origin, which is our source.
 \end{enumerate}
 
-For the Harmonic Search algorithm, we were only able to test it for $D = 10$, since for higher values of $D$, the algorithm became prohibitively expensive. We varied $k$ from 10 to 200 inclusive in intervals of 10 as with Lines and Spiral, and we tested each for 100 times, with randomly placed treasures. For the Harmonic Search algorithm we let $\delta = 1$. For the Lines algorithm, we let $K = 6$.  
+For the Harmonic Search algorithm, we were only able to test it for $D = 10$, since for higher values of $D$, the algorithm became prohibitively expensive. We varied $k$ from 10 to 200 inclusive in steps of 10 as with Lines and Spiral, and we tested each 100 time with randomly placed treasures. For the Harmonic Search algorithm we let $\delta = 1$. For the Lines algorithm, we let $k = 6$.  
 
-When done with all the iterations, we compute the average time per 100 experiments and assume that this is the expected value. 
+When done with all the iterations, we computed the average time for the 100 experiments and treat this is as the expected value. 
 
-\subsubsection{Hypothesis} We hypothesized that the Lines algorithm will be worse, it terms of runtime, compared to the Spiral algorithm. This stems from the fact that the Lines algorithm is optimizing for selection complexity, which would lead to an algorithm that relies on more randomization and iteration. In fact, in the proof of correctness of the Lines algorithm, many times, the proofs use the asymptotics to engulf some smaller order terms.
+\subsection{Hypotheses}
+
+We hypothesized that the Lines algorithm will be worse in terms of runtime when compared to the Spiral algorithm. This stems from the fact that the Lines algorithm is optimizing for selection complexity, which would lead to an algorithm that relies on more randomization and iterations. In fact, in the proof of correctness of the Lines algorithm, many times, the proofs use the asymptotics to engulf some smaller order terms. We expect that these smaller order terms will show up in the testing.
 
 \subsection{Findings}
 
-After running the experiments on all six algorithms (Spiral non-uniform in $k$, Spiral uniform in $k$, Lines non-uniform in $D$, Lines uniform in $D$, but not in $n$, Lines uniform in $n$ and $D$, and Harmonic Seach). 
+After running the experiments on all six algorithms (Spiral non-uniform in $k$, Spiral uniform in $k$, Lines non-uniform in $D$, Lines uniform in $D$, but not in $n$, Lines uniform in $n$ and $D$, and Harmonic Search). 
 
 \subsubsection{Non-uniform in $k$} For non-uniform in $k$ algorithms, we assume that the expected runtime of the algorithms is given by the following formula
 \[ E[T] = c_1 + c_2 / k \]
-Where we are keeping $D = 40$. So we are looking to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure~\ref{nonuniformresultsone} and Figure~\ref{nonuniformresultstwo} shows the $k$ being graphed against $k * E[T]$, which we expect to be linear with solve $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
+where we are keeping $D = 40$. So we are looking to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure 2 and Figure 3 shows $k$ being graphed against $k * E[T]$, which we expect to be linear with slope $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
 \begin{center}
 \begin{tabular}{l | c c}
 \text{Algorithm} & $c_1$ & $c_2$ \\
@@ -247,8 +249,8 @@ Where we are keeping $D = 40$. So we are looking to compute the constants $c_1$ 
 
 \subsubsection{Uniform in $k$} For uniform in $k$ algorithms, we assume that the expected runtime of the algorithms is given by the following formula
 \[ E[T] = f(\log k)(c_1 + c_2 / k) \]
-Where we set $f(x) = x^2 + 1$. This satisfies all our constraints from the theorems in the paper.
-Again, we keep $D = 40$ and we want to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure~\ref{uniformresultsone} and Figure~\ref{uniformresultstwo} shows the $k$ being graphed against $k * E[T]/f(\log k)$, which we expect to be linear with solve $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
+where we set $f(x) = x^2 + 1$. This satisfies all our constraints from the theorems in the paper.
+Again, we keep $D = 40$ and we want to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure 4 and Figure 5 shows $k$ being graphed against $k * E[T]/f(\log k)$, which we expect to be linear with slope $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
 \begin{center}
 \begin{tabular}{l | c c}
 \text{Algorithm} & $c_1$ & $c_2$ \\
@@ -273,9 +275,11 @@ Again, we keep $D = 40$ and we want to compute the constants $c_1$ and $c_2$ for
 \end{figure}
 
 \subsubsection{Interpretation}
-This shows that in fact, when only analyzing runtime. The Spiral algorithm performs better than the Lines algorithm in both uniform and non-uniform cases. This of course, was expected, since the Lines algorithm optimizes for memory. 
+This shows that when we only analyze runtime, the Spiral algorithm performs better than the Lines algorithm in both uniform and non-uniform cases. This was expected since the Lines algorithm optimizes for memory. 
 
-Some interesting thing we noted is that when running the Lines algorithm in the non-uniform flavour in $D$, we noted that there were lower order terms which were important in the runtime. Figure~\ref{nonuniforminD} and Figure~\ref{nonuniforminDtwo} show how there are lower order terms that are hidden in the asymptotics that do make a difference in the experiments for small $k$. In fact, the assumption that $E[T] = c_1 + c_2 / k$ gives us the graph Figure~\ref{nonuniforminD} being a line, whereas the assumption $E[t] = c_1/ k + c_2 / k^2$ gives us the graph Figure~\ref{nonuniforminDtwo} being a line, which is much more accurate.
+Some interesting things we noted were that when running the Lines algorithm in the non-uniform in $D$ variant, there were lower order terms which were important in the runtime. Figure 6 and Figure 7 show how there are lower order terms that are hidden in the asymptotics that do make a difference in the experiments for small $k$. In fact, the assumption that $E[T] = c_1 + c_2 / k$ gives us the graph Figure 6 which is hard to fit with a line, whereas the assumption $E[t] = c_1/ k + c_2 / k^2$ gives us the graph Figure 7 which fits to a line.
+
+Note that we considered the case where $k \leq 200$, and it turns out that real ant colonies can be this small. The acorn ant is known to have colonies of around 100 worker ants, and since the goal of the lines algorithm is to be slightly more realistic than the other algorithms, this analysis shows that perhaps lower order terms in $k$ should not be neglected.
 
 \begin{figure}
 \centering
