@@ -117,6 +117,28 @@ Once we have the spiral algorithm non-uniform in $k$, we can make it uniform in 
 \section{Harmonic Algorithm}
 \label{harmonic}
 
+The following is a brief explanation of the Harmonic search algorithm, which, as mentioned earlier, is uniform in both $k$ and $D$.
+
+The main idea is to avoid maintaining a state associated with an estimate of $D$ by randomly regions in the plane such that smaller $D$ will be explored earlier more often. More specifically, the procedure as presented in \cite{feinerman2012collaborative} is composed of the following three steps, performed indefinitely: (1) choose a random direction and walk a distance $d$ in that direction from the source, where $d$ is sampled with probability approximately inversely proportional to $d$, (2) do a spiral search for time $\sim d^2$, and (3) return to the source.
+
+The expected performance of the algorithm is determined by a fixed value $\delta > 0$. The formal description of the algorithm, shown below, uses the probability distribution $p(u) := \frac{c}{d(u)^{2+\delta}}$, where $u$ is a point in the plane, $d(u)$ the distance from the source to $u$, and $c$ a normalizing factor. The following is performed by each agent:
+
+\begin{codebox}
+\li \textbf{begin}
+\Then 
+\li Go to node $u$ with probability $p(u)$
+\li Perform spiral search for time $t(u) := d(u)^{2+\delta}$
+\li Return to source 
+\End
+\li \textbf{end} 
+\end{codebox}
+
+The performance guarantees of the algorithm are stated formally below. For a proof of the statement, please refer to \cite{feinerman2012collaborative}: \\
+
+\emph{
+Let $\delta \in (0,0.8]$. For every $\epsilon > 0$, there exists a positive real number $\alpha$ such that if the number $k$ of agents is greater than $\alpha D^{\delta}$, then with probability at least $1-\epsilon$, the expected running time of the harmonic algorithm is $O( D + \frac{D^{2+\delta}}{k})$.
+}
+
 \section{Lines Algorithm}
 \label{lines}
 
