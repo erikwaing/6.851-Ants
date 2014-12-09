@@ -139,7 +139,7 @@ The performance guarantees of the algorithm are stated formally below. For a pro
 Let $\delta \in (0,0.8]$. For every $\epsilon > 0$, there exists a positive real number $\alpha$ such that if the number $k$ of agents is greater than $\alpha D^{\delta}$, then with probability at least $1-\epsilon$, the expected running time of the harmonic algorithm is $O( D + \frac{D^{2+\delta}}{k})$.
 }
 
-\section{Lines Algorithm}
+\section{Lines Algorithms}
 \label{lines}
 
 The lines algorithm is the study of \cite{lenzen2014trade}, where they cover a lines algorithm which is non-uniform in $D$ and non-uniform in $k$. We use the ideas of \cite{feinerman2012collaborative} to design a lines algorithm which is uniform in both $k$ and $D$. The lines algorithm has many optimizations since \cite{lenzen2014trade} are trying to reduce \emph{selection complexity}. Selection complexity is a metric which measures how likely an algorithm is to occur naturally in nature. Of course, this notion is very vague, but formally, the selection complexity $\chi$ of an algorithm $A$ is $\chi(A) = b + \log l$ where $b$ is the amount of memory usage and $l$ is smallest $l$ for which the algorithm does not need finer probabilities than $2^{-l}$. In \cite{lenzen2014trade}, Lenzen et al. provided a lines algorithm with selection complexity $O(\log \log D)$.
@@ -174,6 +174,15 @@ The one thing to note is that the last line, ``return to origin" would need to k
 The sketch of the proof of correctness is the following ...????
 
 \subsubsection{Uniform in $D$}
+
+
+
+\subsection{Uniform in $k$}
+
+Since we ultimately want to compare the algorithms discussed via simulations, we felt it was necessary to extend the lines algorithms with a variant uniform in $k$, which we could then compare with the uniform spiral algorithm and harmonic search.
+
+The main idea for achieving uniformity in $k$ is borrowed from \cite{feinerman2012collaborative}: we start with a small guess for $k$, run the algorithm uniform in $D$ under this assumption, and then double out guess for $k$ and repeat. The implementation actually interleaves the increments of the $D$ and $k$ estimates, running one iteration of the non-uniform subroutine for each estimate.
+
 
 \section{Experiments and Results}
 \label{experiments}
