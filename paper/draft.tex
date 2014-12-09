@@ -178,11 +178,31 @@ The sketch of the proof of correctness is the following ...????
 \section{Experiments and Results}
 \label{experiments}
 
-\subsection{Hypotheses}
+In this section, we show our results for the experiments we ran on the algorithms mentioned above. We do not go into detail regarding the various implementations of the algorithms, but all of the code, along with the data used is available online hosted in the git repository: \url{https://github.com/erikwaing/6.852-Ants.git}. 
 
-\subsection{Experimental Setup}
+We implemented the three algorithms, in the possible different uniformity flavours. Even though \cite{lenzen2014trade} does not go into detail on how to make the Lines algorithm uniform in $k$, we apply the same techniques as in \cite{feinerman2012collaborative}. This allows us to compare the algorithms on an equal setting, with both non-uniform in $k$ and uniform in $k$ flavours. 
+
+In the Lines algorithm, there are optimizations made in order to keep memory low. For example, in the outer loop of the Lines algorithm which is uniform in $D$, but not in $n$, there is some approximate counting. We note that the algorithm still works with the same runtime if instead of the approximate couting, we looped for as long as the expected value of the number of loops. This keeps the expected runtime the same, and decreases the variance runtime, which will allow us to converge to constants experimentally quicker. These approximate countings were made in order to optimize memory, and we are only focused on the runtime of the algorithms.
+
+\subsubsection{Experimental Setup}
+
+We had to run the Spiral algorithm and the Lines algorithm differently from the Harmonic Search algorithm. This is because the Harmonic Search requires arbritrary fine probabilites. The technique we used for implementing the Harmonic Search relies on sampling uniformly from the interval $(0, 1)$, and then applying some transformations. Since we implemented the algorithm in python, and used \texttt{random.random()} in order to sample uniformly from $(0,1)$, we are limited by the granurality of the python module. This means that our current implementation of the Harmonic Search has an upper bound on how far $D$ can be. We believe finding better ways to implement this algorithm is an interesting research direction, both in the theoretical algorithms world, as well as the experimental algorithms world. 
+
+For testing the Lines and Spiral algorithms, we ran the following series of experiments. 
+\begin{enumerate}
+\item We set $D = 40$, and left it at 40 for the whole experiments. 
+\item We vary $k$ from $10$ to $200$ inclusive in intervals of 10. 
+\item We run each algorithm with each value of $k$ for 100 iterations.
+\item We run the experiments on a random placement of the treasure within hop distance $D$ from the origin, which is our source.
+\end{enumerate}
+
+For the Harmonic Search algorithm, we were only able to test it for $D = 10$, since for higher values of $D$, the algorithm became prohibitively expensive. We varied $k$ from 10 to 200 inclusive in intervals of 10 as with Lines and Spiral, and we tested each for 100 times, with randomly placed treasures.
+
+\subsubsection{Hypothesis} We hypothesized that the Lines algorithm will be worse, it terms of runtime, compared to the Spiral algorithm. This stems from the fact that the Lines algorithm is optimizing for selection complexity, which would lead to an algorithm that relies on more randomization and iteration. In fact, in the proof of correctness of the Lines algorithm, many times, the proofs use the asymptotics to engulf some smaller order terms.
 
 \subsection{Findings}
+
+After running the experiments on all five algorithms (Spiral non-uniform in $k$, Spiral uniform in $k$, 
 
 \subsection{Interpretation}
 
