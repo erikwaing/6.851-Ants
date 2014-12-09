@@ -294,6 +294,12 @@ and we compute the constants $c_1$ and $c_2$. We get that for $D=10$, $c_1 = 148
 \section{Conclusion}
 \label{conclusion}
 
+In this paper, we have surveyed the recent literature on the Ants Nearest Treasure Search problem, and have identified three prominent algorithms: the spiral algorithm, the harmonic algorithm, and the lines algorithm. For each algorithm, we considered cases where they are either uniform or not uniform in the variables $D$ and $k$. The lines algorithm was motivated by the idea of a selection complexity, a parameter that roughly models how complex a certain algorithm is. While the spiral and harmonic algorithms achieved good / optimal asymptotic bounds, the lines algorithm could do so while maintaining a low (favorable) selection complexity.
+
+Due to the relative simplicity of the lines algorithm, we conjectured that the good asymptotic runtime of the lines algorithm was hiding its costs in constant factors. We ran experiments comparing the three algorithms with each other, which confirmed our intuition that the lines algorithm had the worst actual runtimes. In fact, it turned out that the lines algorithm had a large $O(1/k^2)$ term that did not show up in the asymptotics, but mattered for the values of $k \leq 200$ that we tested. We claim that these $k$ are worth considering, as many real ant colonies such as those made by acorn ants can have $k$ values of that size.
+
+Our work leaves some questions unresolved, and given more time, we would have liked to pursue some of these lines of inquiry. One question that we would like to know is what the exact values of constants are as we vary the parameter $D$. Another issue we had was that when we performed simulations of the harmonic search algorithm, we did not have a good way of sampling from the theoretical probability distribution. Improving this sampling technique would increase the accuracy of our results. Finally, we would like to consider the problem of placing treasure in an adversarial sense. Note that when we randomly place treasure, as we did in simulations, the question is how long it takes for us to find this random treasure in expectation. When we adversarially place treasure at distance $D$, it is assumed that the treasure is the last distance $D$ square the ants reach, so the problem is simply to fully cover an area of space. We wonder how considering adversarial placement of treasure would impact our results.
+
 \bibliographystyle{plain}
 \bibliography{references}
 
