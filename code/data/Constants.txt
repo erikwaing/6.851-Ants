@@ -13,6 +13,27 @@ FKLS1 - from data FKLS12014-12-04
 
 	   E[T] = 147.08007853 + 21567.89416092 / n
 
+FKLS1 - from data FKLS12014-12-08
+
+      D goes from 10 to 55 by 5
+      n remains constant at 200
+      numTrials = 100
+
+      ****
+
+	   E[T] = 0.0410303 D^2 + 4.93094545 D - -15.51248485
+
+FKLS2 - from data FKLS22014-12-08
+
+      D goes from 10 to 55 by 5
+      n remains constant at 200
+      numtrials = 100
+
+      ****
+	   there seems to be an error here....	
+
+	   E[T] = 1.78780758 D^2 + 1.94144871e+02 D + -1.89544938e+03
+
 FKLS2 - from data FKLS22014-12-05
 
       D remains constant at 40
@@ -87,6 +108,3 @@ LinesUniformInAll - from LinesUniformInAll2014-12-06.txt
 	       assumption semi confirmed
 
 	       E[T] = (log^2n + 1)(284.90394412 + 76762.10889787 / n)
-
-
-	    
