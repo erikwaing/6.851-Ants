@@ -13,3 +13,80 @@ FKLS1 - from data FKLS12014-12-04
 
 	   E[T] = 147.08007853 + 21567.89416092 / n
 
+FKLS2 - from data FKLS22014-12-05
+
+      D remains constant at 40
+      n changes from 10 to 200 by increments of 10
+      f = x^2 + 1
+      numTrials = 100
+
+      ****
+
+      Assume that the output is E[T] = log^2(n)(c_1D + c_2D^2 / n)
+      
+	assumption confirmed. 
+	we get linear interpolation is:
+
+	   E[T] = (log^2n+1)(222.93084857 + 19954.026486 / n)
+
+Harmonic Search - from HarmonicSearch2014-12-06
+
+	D remains constant at 10
+	n changes from 10 to 200
+	delta = 1
+	numTrials = 100
+
+	****
+
+	Assume that the output is E[T] = c_1D + c_2D^3 / n
+
+	  assumption confirmed? Should do more experments in high values of n
+	  we get linear regression is:
+
+	     E[T] = 148.08373684 + 2319.71263158 / n
+
+LinesNonUniform - from LinesNonUniform2014-12-06
+
+	D remains constant at 40
+	n changes from 10 to 200 by 10
+	numTrials = 100
+
+	****
+
+	Assume that the output is E[T] = c_1D + c_2D^2 / n
+	
+	   we get an extra term, so that we only get a line when we plot
+	   n^2T vs n,
+
+	   	E[T] = 26460.31443609 / k + 151116.88421053 / k^2
+
+LinesUniformInD - from LinesUniformInD2014-12-06.txt
+
+	D remain constant at 40
+	n changes from 10 to 200 by 10
+	numTrials = 100
+
+	****
+
+	Assume that the output is E[T] = c_1D + c_2D^2 / n
+
+	       assumption confirmed.
+
+	       	E[T] = 896.78892481 + 32730.31789474 / n
+
+LinesUniformInAll - from LinesUniformInAll2014-12-06.txt
+
+	D remain constant at 40
+	n changes from 10 to 200 by 10
+	numTrials = 100
+
+	****
+	
+	Assume that the output is E[T] = (log^2n+1)(c_1D + c_2D^2/n)
+
+	       assumption semi confirmed
+
+	       E[T] = (log^2n + 1)(284.90394412 + 76762.10889787 / n)
+
+
+	    
