@@ -175,13 +175,17 @@ The sketch of the proof of correctness is the following ...????
 
 \subsubsection{Uniform in $D$}
 
+The main idea behind the variant uniform in $D$ is that each agent maintains a guess for $D$, which it increases over time, and for each estimate is runs a certain number of iterations of the non-uniform routine (with the current estimate of $D$).
 
+Specifically, the algorithm consists of two loops: an outer, deterministic loop that doubles the guess of $D$ at each iteration (starting with the guess $D = 2$), and an inner loop that flips a coin at each iteration and stops when the coin lands tails. The coin flipped has probability of tails given by $\frac{1}{2^p}$, where roughly $p := K + \max \{ \log D - \lfloor \log k \rfloor, 0 \}$. Each time the coin lands heads, we run an iteration of the non-uniform algorithm.
 
-\subsection{Uniform in $k$}
+This algorithm matches, in expectation, the lower bound of $O(D + \frac{D^2}{k})$.
+
+\subsubsection{Uniform in $k$}
 
 Since we ultimately want to compare the algorithms discussed via simulations, we felt it was necessary to extend the lines algorithms with a variant uniform in $k$, which we could then compare with the uniform spiral algorithm and harmonic search.
 
-The main idea for achieving uniformity in $k$ is borrowed from \cite{feinerman2012collaborative}: we start with a small guess for $k$, run the algorithm uniform in $D$ under this assumption, and then double out guess for $k$ and repeat. The implementation actually interleaves the increments of the $D$ and $k$ estimates, running one iteration of the non-uniform subroutine for each estimate.
+The main idea for achieving uniformity in $k$ is borrowed from \cite{feinerman2012collaborative}: we start with a small guess for $k$, run the algorithm uniform in $D$ under this assumption, and then double out guess for $k$ and repeat. The implementation actually interleaves the increments of the $D$ and $k$ estimates, running a certain number of iterations of the non-uniform subroutine for each estimate.
 
 
 \section{Experiments and Results}
