@@ -8,7 +8,7 @@
 \usepackage{amsmath}
 %\usepackage{amsfonts}
 %\usepackage{amsthm}
-\usepackage{subfigure}
+\usepackage[tight,footnotesize]{subfigure}
 %\usepackage{caption} 
 %\usepackage{subcaption}
 %\usepackage{cite}
@@ -205,18 +205,109 @@ For testing the Lines and Spiral algorithms, we ran the following series of expe
 \item We run the experiments on a random placement of the treasure within hop distance $D$ from the origin, which is our source.
 \end{enumerate}
 
-For the Harmonic Search algorithm, we were only able to test it for $D = 10$, since for higher values of $D$, the algorithm became prohibitively expensive. We varied $k$ from 10 to 200 inclusive in intervals of 10 as with Lines and Spiral, and we tested each for 100 times, with randomly placed treasures.
+For the Harmonic Search algorithm, we were only able to test it for $D = 10$, since for higher values of $D$, the algorithm became prohibitively expensive. We varied $k$ from 10 to 200 inclusive in intervals of 10 as with Lines and Spiral, and we tested each for 100 times, with randomly placed treasures. For the Harmonic Search algorithm we let $\delta = 1$. For the Lines algorithm, we let $K = 6$.  
+
+When done with all the iterations, we compute the average time per 100 experiments and assume that this is the expected value. 
 
 \subsubsection{Hypothesis} We hypothesized that the Lines algorithm will be worse, it terms of runtime, compared to the Spiral algorithm. This stems from the fact that the Lines algorithm is optimizing for selection complexity, which would lead to an algorithm that relies on more randomization and iteration. In fact, in the proof of correctness of the Lines algorithm, many times, the proofs use the asymptotics to engulf some smaller order terms.
 
 \subsection{Findings}
 
-After running the experiments on all five algorithms (Spiral non-uniform in $k$, Spiral uniform in $k$, 
+After running the experiments on all six algorithms (Spiral non-uniform in $k$, Spiral uniform in $k$, Lines non-uniform in $D$, Lines uniform in $D$, but not in $n$, Lines uniform in $n$ and $D$, and Harmonic Seach). 
 
-\subsection{Interpretation}
+\subsubsection{Non-uniform in $k$} For non-uniform in $k$ algorithms, we assume that the expected runtime of the algorithms is given by the following formula
+\[ E[T] = c_1 + c_2 / k \]
+Where we are keeping $D = 40$. So we are looking to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure~\ref{nonuniformresultsone} and Figure~\ref{nonuniformresultstwo} shows the $k$ being graphed against $k * E[T]$, which we expect to be linear with solve $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
+\begin{center}
+\begin{tabular}{l | c c}
+\text{Algorithm} & $c_1$ & $c_2$ \\
+\hline
+\text{Spiral} 	   &147 & 21567 \\
+\text{Lines}	   & 896 & 32730 
+\end{tabular}
+\end{center}
+
+\begin{figure}
+\centering
+\label{nonuniformresultsone}
+\includegraphics[width=0.5\linewidth]{FKLS1.png}
+\caption{Spiral algorithm non-uniform in $k$, $kE[T]$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\begin{figure}
+\centering
+\label{nonuniformresultstwo}
+\includegraphics[width=0.5\linewidth]{LinesUniformInD.png}
+\caption{Lines algorithm non-uniform in $k$, $kE[T]$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\subsubsection{Uniform in $k$} For uniform in $k$ algorithms, we assume that the expected runtime of the algorithms is given by the following formula
+\[ E[T] = f(\log k)(c_1 + c_2 / k) \]
+Where we set $f(x) = x^2 + 1$. This satisfies all our constraints from the theorems in the paper.
+Again, we keep $D = 40$ and we want to compute the constants $c_1$ and $c_2$ for the Spiral and Lines algorithm. Figure~\ref{uniformresultsone} and Figure~\ref{uniformresultstwo} shows the $k$ being graphed against $k * E[T]/f(\log k)$, which we expect to be linear with solve $c_1$ and intercept $c_2$. Using linear regression, we are able to estimate the values of $c_1$ and $c_2$. 
+\begin{center}
+\begin{tabular}{l | c c}
+\text{Algorithm} & $c_1$ & $c_2$ \\
+\hline
+\text{Spiral} 	   &222 & 19954 \\
+\text{Lines}	   & 284 & 76762 
+\end{tabular}
+\end{center}
+
+\begin{figure}
+\centering
+\label{uniformresultsone}
+\includegraphics[width=0.5\linewidth]{FKLS2.png}
+\caption{Spiral algorithm uniform in $k$, $kE[T]/f(\log k)$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\begin{figure}
+\centering
+\label{uniformresultstwo}
+\includegraphics[width=0.5\linewidth]{LinesUniformInAll.png}
+\caption{Lines algorithm non-uniform in $k$, $kE[T]/f(\log k)$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\subsubsection{Interpretation}
+This shows that in fact, when only analyzing runtime. The Spiral algorithm performs better than the Lines algorithm in both uniform and non-uniform cases. This of course, was expected, since the Lines algorithm optimizes for memory. 
+
+Some interesting thing we noted is that when running the Lines algorithm in the non-uniform flavour in $D$, we noted that there were lower order terms which were important in the runtime. Figure~\ref{nonuniforminD} and Figure~\ref{nonuniforminDtwo} show how there are lower order terms that are hidden in the asymptotics that do make a difference in the experiments for small $k$. In fact, the assumption that $E[T] = c_1 + c_2 / k$ gives us the graph Figure~\ref{nonuniforminD} being a line, whereas the assumption $E[t] = c_1/ k + c_2 / k^2$ gives us the graph Figure~\ref{nonuniforminDtwo} being a line, which is much more accurate.
+
+\begin{figure}
+\centering
+\label{nonuniforminD}
+\includegraphics[width=0.5\linewidth]{LinesNonUniformnT.png}
+\caption{Lines algorithm non-uniform in $D$, $kE[T]$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\begin{figure}
+\centering
+\label{nonuniforminDtwo}
+\includegraphics[width=0.5\linewidth]{LinesNonUniformn2T.png}
+\caption{Lines algorithm non-uniform in $D$, $k^2E[T]$ is the $y$-axis and $k$ is in the $x$-axis}
+\end{figure}
+
+\subsection{Harmonic Search}
+
+We assume that the expected value for the runtime of the Harmonic Search algorithm is given by the following formula
+\[ E[T] = c_1 + c_2 / k \]
+and we compute the constants $c_1$ and $c_2$. We get that for $D=10$, $c_1 = 148$ and $c_2 = 2319$. Figure~\ref{harmonic}
+
+\begin{figure}
+\centering
+\label{harmonic}
+\includegraphics[width=0.5\linewidth]{Harmonic.png}
+\caption{Harmonic Search algorithm, $kE[T]$ is the $y$-axis and $k$ is the $x$-axis.}
+\end{figure}
 
 \section{Conclusion}
 \label{conclusion}
+
+In this paper, we have surveyed the recent literature on the Ants Nearest Treasure Search problem, and have identified three prominent algorithms: the spiral algorithm, the harmonic algorithm, and the lines algorithm. For each algorithm, we considered cases where they are either uniform or not uniform in the variables $D$ and $k$. The lines algorithm was motivated by the idea of a selection complexity, a parameter that roughly models how complex a certain algorithm is. While the spiral and harmonic algorithms achieved good / optimal asymptotic bounds, the lines algorithm could do so while maintaining a low (favorable) selection complexity.
+
+Due to the relative simplicity of the lines algorithm, we conjectured that the good asymptotic runtime of the lines algorithm was hiding its costs in constant factors. We ran experiments comparing the three algorithms with each other, which confirmed our intuition that the lines algorithm had the worst actual runtimes. In fact, it turned out that the lines algorithm had a large $O(1/k^2)$ term that did not show up in the asymptotics, but mattered for the values of $k \leq 200$ that we tested. We claim that these $k$ are worth considering, as many real ant colonies such as those made by acorn ants can have $k$ values of that size.
+
+Our work leaves some questions unresolved, and given more time, we would have liked to pursue some of these lines of inquiry. One question that we would like to know is what the exact values of constants are as we vary the parameter $D$. Another issue we had was that when we performed simulations of the harmonic search algorithm, we did not have a good way of sampling from the theoretical probability distribution. Improving this sampling technique would increase the accuracy of our results. Finally, we would like to consider the problem of placing treasure in an adversarial sense. Note that when we randomly place treasure, as we did in simulations, the question is how long it takes for us to find this random treasure in expectation. When we adversarially place treasure at distance $D$, it is assumed that the treasure is the last distance $D$ square the ants reach, so the problem is simply to fully cover an area of space. We wonder how considering adversarial placement of treasure would impact our results.
 
 \bibliographystyle{plain}
 \bibliography{references}
