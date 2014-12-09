@@ -1,0 +1,15 @@
+FKLS1 - from data FKLS12014-12-04
+
+      D remains constant at 40
+      n changes from 10 to 300 by incrememnts of 10
+      numTrials = 1000 per experiment.
+
+      ****
+
+      Assume that output is E[T] = c_1D + c_2D^2/n
+      
+	assumption confirmed, and so when D is constant at 40,
+	we get linear interpolation is:
+
+	   E[T] = 147.08007853 + 21567.89416092 / n
+
