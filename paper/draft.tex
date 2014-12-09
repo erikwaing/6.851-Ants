@@ -48,7 +48,7 @@ Our project is a combination of a reading project and an experimental project. F
 The paper is organized as follows. In Section~\ref{problem statement}, we formally state and motivate the problem. We also give a simple argument for why any algorithm solving the problem takes $\Omega(D+D^2/k)$ time. We then outline different algorithm types, and give high-level overviews of the spiral, harmonic, and lines algorithms. In Section~\ref{spiral}, we give a more in-depth explanation of the details of the spiral algorithm of Feinerman et al. We do this for the harmonic algorithm in Section~\ref{harmonic}, and for the lines algorithm in Section~\ref{lines}. In Section~\ref{experiments}, we shift our focus to the experimental part of our project. In that section, we describe our hypotheses, our experimental setup, the results, and our interpretation of the results. We give concluding remarks in Section~\ref{conclusion}. 
 
 \section{Problem Setup and Basics}
-\label{problem statment}
+\label{problem statement}
 
 There are $k$ mobile agents searching for treasure in the two-dimensional grid $G$ with vertex set $\mathbb{Z}^2$. All $k$ agents start the search from a central \emph{source} node $s \in G$. An adversary places the treasure at some target node $\tau \in G$ at a \emph{hop distance} $D$ away from $s$. The hop distance is the minimum number of grid edges that must be traversed to get from one node to another, and is also known as the taxicab distance. We denote the hop distance from the starting node $s$ to some point $t$ as $d(t)$. The goal of the agents is for one of them to find the treasure by reaching the node $\tau$.
 
@@ -62,6 +62,7 @@ Also, $T$ must satisfy $T \geq D^2/4k$. To see why, suppose not. Then $T < D^2/4
 
 Note this lower bound holds even if the agents knows the total number of agents. 
 
+\subsection{Types of Algorithms}
 We will focus on three kinds of algorithms:
 \begin{itemize}
 \item Spiral algorithms
@@ -152,14 +153,16 @@ The sketch of the proof of correctness is the following ...????
 
 \subsubsection{Uniform in $D$}
 
-\subsection{Extending LLNR to uniform}
-
 \section{Experiments and Results}
 \label{experiments}
 
-\subsection{Non-uniform in $n$}
+\subsection{Hypotheses}
 
-\subsection{Uniform in $n$}
+\subsection{Experimental Setup}
+
+\subsection{Findings}
+
+\subsection{Interpretation}
 
 \section{Conclusion}
 \label{conclusion}
